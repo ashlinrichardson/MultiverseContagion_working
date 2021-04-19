@@ -3,6 +3,23 @@
 // ****************************************************************************
 console_log("paramSIMVL 2021.03.25 GUI-HTML parameter CovidSIMVL");
 console_log(Date());
+console_log("*** start ***")
+
+function dic_to_str(x) {
+    var i = 0
+    var s = "{"
+    for (var key in x) {
+        if (i++ > 0) {
+            s += ", "
+        }
+        s += key.toString() + ":" + x[key].toString()
+    }
+    return s + "}"
+}
+
+var M = {'UCt': 1}
+M.UCt = 1
+console.log("M.UCt = " + M.UCt.toString())
 
 function GetURLParameter(sParam){
     console_log("GetURLParameter")
@@ -45,12 +62,15 @@ var c;
 
 function startParam(){
       //alertX("Load param.json file starting");
+      console_log("startParam() myLoad(param.json)")
       myLoad("param.json");
+      console_log("JSONprocessData(COLLECTION)", COLLECTION)
       JSONprocessData(COLLECTION);
       //alertX("Finished with parameter loading");
 }
 
 function myLoad(xfname) {
+    console_log("myLoad(", xfname, ")")
     iLoad(xfname);
     COLLECTION = loadresult.x;
   }
@@ -64,8 +84,8 @@ function myLoad(xfname) {
      catch{
        has_dom = false;
      }
-
-     if(has_dom){
+     console_log("has_dom", has_dom)
+     if(has_dom==true){
        var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function(){
            if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
@@ -79,6 +99,8 @@ function myLoad(xfname) {
      else{
        txt = console.r.call('file_read', xFile)
        loadresult = JSON.parse(txt);
+       console_log("txt:", txt)
+       console_log("loadresult:", loadresult.x)
      }
  }
 
@@ -89,18 +111,23 @@ function myLoad(xfname) {
  }
 
  function JSONprocessData(one) {
-     console_log("JSONprocessData[" + one + "]")
+     console_log("JSONprocessData[" + one +  "]")
      var allTextLines = one.split(/\r\n|\n/);
      lines = [];
      while (allTextLines.length) {
          lines.push(allTextLines.shift().split(','));
      }
+     console_log("lines:[", lines, "]")
      JSONprocessL();
  }
 
  function JSONprocessL() {
+     console_log("JSONprocessL()")
+     console_log("lines:[" + lines)
+     console_log("]")
      let i, j;
      var inType = lines[0][0];
+     console_log("inType:" + inType.toString())
      switch (inType){
              case "Parameters":
                  JSONprocessParam();
@@ -112,18 +139,28 @@ function myLoad(xfname) {
                 JSONprocessCase();
                 break;
              default:
-               console_log("File format error");
+               console_log("File format error:" + inType.toString());
                alertX("File Format error");
      }
  }
 
+var popnFileName;
+var caseFileName;
+
+
 function JSONprocessParam(){
+    console_log("JSONprocessParam()")
+    console.log("M.UCt=" + M.UCt.toString())
+    console_log("lines[")
+    console_log(lines)
+    console_log("]")
     initMV();
     let i=0;
     lines.shift();
     let lineNo = lines.length;
     let parx;
     for (i=0;i<lineNo;i++){
+      console_log("lines[i]=[" + lines[i] + "]")
       parx = lines[i][0];
       let parN = lines[i][1];
       switch(parx){
@@ -133,6 +170,7 @@ function JSONprocessParam(){
               break;
           case "UN":
               M.UCt = Number(lines[i][1]);
+              console_log("M.UCt = " + M.UCt.toString())
               JSONinitUn();
               let p;
               for (p=0;p<M.UCt;p++){
@@ -144,6 +182,8 @@ function JSONprocessParam(){
               break;
           case "sizeF":
               let univ = lines[i][2];
+              console_log("lines[i]: " + lines[i].toString())
+              console_log("univ = " + lines[i][2].toString())
               chSizeF(parN,univ);
               break;
           case "mF":
@@ -173,15 +213,14 @@ function JSONprocessParam(){
 }
 
 
-var popnFileName;
+
 function startPopFile(){
-      console_log("Reading population file "+popnFileName);
+      console_log("Reading population file: " + popnFileName);
       myLoad(popnFileName);
       JSONprocessData(COLLECTION);
       console_log("Population File loaded");
 }
 
-var caseFileName;
 function startCaseFile(){
       console_log("Reading Case File "+caseFileName);
       myLoad(caseFileName);
@@ -190,6 +229,7 @@ function startCaseFile(){
 }
 
 function JSONprocessPop() {
+    console_log("JSONprocessPop")
     lines.shift();
     lines.shift();
     initTicket();
@@ -203,6 +243,7 @@ function JSONprocessPop() {
 }
 
 function JSONprocessCase() {
+    console_log("JSONprocessCase")
     let i=0;
     lines.shift();                  //gets rid of row labels
     lines.shift();
@@ -241,6 +282,8 @@ function parseC(lineStr) {
 
 var oneTime = 0;
 function JSONinitUn() {
+    console_log("**********JSONinitUn()*******")
+    console_log("**********M.UCt = " + M.UCt.toString()) 
     let i,j;
     oneTime = 0;
     for (i = 0; i < M.UCt; i++) {
@@ -255,7 +298,6 @@ function JSONinitUn() {
 /*                           start html GUI SPECIFIC FILE ROUTINES *******************************
 /*
 /***************************************************************************************************/
-
 
 function handleFiles(files) {
     if(use_html) {
@@ -874,7 +916,6 @@ function startMain(){
 
 
     // ***************************************************** NAMES OF UNIVERSES **************************
-
     var UN = [];
     function loadUNames(){
 
@@ -1080,7 +1121,7 @@ function startMain(){
 
     var gen = 0;
     var R0;
-    var M = new ConstructMVC;
+    // ConstructMVC(M);
 
     // for Fixed U which opertes in days, the following are viral loads starting from 1, to peak VL
     // as 10 on days as indexes of the array -peak at 4d to 6 days
@@ -1111,49 +1152,52 @@ function startMain(){
     }
 
     function ConstructMVC() {
-        this.ID;
-        this.UCt; // count of Universes
-        this.PCt;
-        this.GreenCt; // these are totals of all universes at this time
-        this.YellowCt;
-        this.BlueCt;
-        this.RedCt;
-        this.OrangeCt; // total count of population
-        this.Cases;
-        this.R0;
-        this.clockDay; // the Master Clock Day
-        this.clockHr; // the Master Clock clock hour
+        console_log("ConstructMVC()")
+        M.ID;
+        M.UCt = 1; // count of Universes
+        M.PCt;
+        M.GreenCt; // these are totals of all universes at this time
+        M.YellowCt;
+        M.BlueCt;
+        M.RedCt;
+        M.OrangeCt; // total count of population
+        M.Cases;
+        M.R0;
+        M.clockDay; // the Master Clock Day
+        M.clockHr; // the Master Clock clock hour
 
-        this.logGreen = [];
-        this.logYellow = [];
-        this.logBlue = [];
-        this.logRed = [];
-        this.logOrange = [];
-        this.logCases = [];
-        this.logR0 = [];
-        this.endGreen = [];
-        this.endYellow = [];
-        this.endBlue = [];
-        this.endRed = [];
-        this.endOrange = [];
-        this.Delta = [];
-        this.endCases = [];
-        this.endVelocity = [];
-        this.endR0 = [];
+        M.logGreen = [];
+        M.logYellow = [];
+        M.logBlue = [];
+        M.logRed = [];
+        M.logOrange = [];
+        M.logCases = [];
+        M.logR0 = [];
+        M.endGreen = [];
+        M.endYellow = [];
+        M.endBlue = [];
+        M.endRed = [];
+        M.endOrange = [];
+        M.Delta = [];
+        M.endCases = [];
+        M.endVelocity = [];
+        M.endR0 = [];
 
-        this.tIncubate;
-        this.qInfective;
-        this.tPeakVL;
-        this.qPeakVL;
-        this.tInfectEnd;
-        this.tOnset;
-        this.tInert;
+        M.tIncubate;
+        M.qInfective;
+        M.tPeakVL;
+        M.qPeakVL;
+        M.tInfectEnd;
+        M.tOnset;
+        M.tInert;
+        console.log("this.UCt=" + toString(this.UCt))
     }
 
 
     function initMV(){
+          console_log("initMV() !!!!!")
           M.ID = "";
-          M.UCt = 9;
+          M.UCt = 1; // was 9
           M.GreenCt = M.PCt; // these are totalled from U's
           M.YellowCt = 0;
           M.BlueCt = 0;
@@ -1188,6 +1232,7 @@ function startMain(){
           M.tInfectEnd = VLinfEnd;
           M.tOnset = VLonsetT;
           M.tInert = VLinfEnd;
+          console_log("M.UCt=" + M.UCt.toString())
     }
 
     // ************************  this describes a local universe *********************************************************
@@ -1242,6 +1287,7 @@ function startMain(){
     }
 
     function initUniv(U, i) {
+        console_log("initUniv:" + U.toString() + "," + i.toString()) 
         U.uID = i;
         U.name = "U" + i;
         U.Population = 0;
@@ -1445,7 +1491,6 @@ function startMain(){
     //
     // ******************************************************************************************************
     //
-
 
     function initTicket(){
             let i;
@@ -1872,7 +1917,6 @@ function startMain(){
     //          these functions deal with parameter settings by user incl slider
     //
     // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     var metInfectMax;
     var metDiagMax;
 
@@ -1951,7 +1995,7 @@ function startMain(){
     }
 
     function chSizeF(x,u){
-        console_log("Size Factor in U "+x+" U"+u);
+        console_log("Size Factor in U " + x.toString() + " U" + u.toString());
         U[u].sizeFactor = Number(x);
     }
 
@@ -2540,7 +2584,6 @@ function implementVax(ages,vax){
     // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     //          MAIN CONTROL LOOP STARTS here
     // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     var anFlag = true;
     var cycleCount = 0;
     var nU = 0;
@@ -4325,7 +4368,6 @@ function implementVax(ages,vax){
     //                    NETWORK GRAPH AND TRAFFIC ROUTINES
     //
     // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     const LFACTOR = 1000;
     const SPEED = 35;
     const ELAPSED = 3500;
@@ -4932,9 +4974,13 @@ if (use_html) {
       GUIstyle("getFile","block");
 }
 else{
+  console_log(" **startParam()")
   startParam();
+  console_log(" *startPopFile()")
   startPopFile();
+  console_log(" *startCaseFile()")
   startCaseFile();
+  console_log(" *startEpiCenters()")
   initEpiCenters();
   load();
   load();
