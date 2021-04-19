@@ -10,8 +10,8 @@ src<-function(x){
 }
 
 src("cpp/file_read.cpp") # read file
-
-file_read("cpp/file_read.cpp")
+# file_read("cpp/file_read.cpp") # example use from R
+# txt = console.r.call('file_read', xFile) # example call back to R from JS
 ctx <- v8()
 
 ctx$assign("use_html", FALSE)
