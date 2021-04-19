@@ -2566,7 +2566,12 @@ function implementVax(ages,vax){
             return;
         }
         MODE = "auto";
-        clockTimer = setInterval(TimesUp, MOTION / FPS);
+        try{
+          clockTimer = setInterval(TimesUp, MOTION / FPS);
+        }
+        catch{
+            while(1) TimesUp();
+        }
     }
 
     function load() {
@@ -4919,15 +4924,16 @@ if (use_html) {
       initMV();
       blackCanvas("graph");
       GUIstyle("getFile","block");
-} else {
-      startParam();
-      startPopFile();
-      startCaseFile();
-      initEpiCenters();
-      load();
-      load();
-      load();
-      auto();
+}
+else{
+  startParam();
+  startPopFile();
+  startCaseFile();
+  initEpiCenters();
+  load();
+  load();
+  load();
+  auto();
 }
 
 
