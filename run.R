@@ -1,3 +1,6 @@
+# essential reading:
+#   https://cran.r-project.org/web/packages/V8/vignettes/v8_intro.html
+
 library(Rcpp)
 library(V8)
 
