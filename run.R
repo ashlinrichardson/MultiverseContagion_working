@@ -11,6 +11,7 @@ src<-function(x){
 
 src("cpp/file_read.cpp") # read file
 
+file_read("cpp/file_read.cpp")
 ctx <- v8()
 
 ctx$assign("use_html", FALSE)
