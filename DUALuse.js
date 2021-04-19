@@ -76,7 +76,7 @@ function myLoad(xfname) {
        xmlhttp.send();
      }
      else{
-       txt = file_read(xFile)
+       txt = console.r.call('file_read', xFile)
        loadresult = JSON.parse(txt);
      }
  }
