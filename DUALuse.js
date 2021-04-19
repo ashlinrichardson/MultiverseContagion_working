@@ -5,6 +5,7 @@ console_log("paramSIMVL 2021.03.25 GUI-HTML parameter CovidSIMVL");
 console_log(Date());
 
 function GetURLParameter(sParam){
+    console_log("GetURLParameter")
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
     for (var i = 0; i < sURLVariables.length; i++)
@@ -88,6 +89,7 @@ function myLoad(xfname) {
  }
 
  function JSONprocessData(one) {
+     console_log("JSONprocessData[" + one + "]")
      var allTextLines = one.split(/\r\n|\n/);
      lines = [];
      while (allTextLines.length) {
@@ -282,6 +284,7 @@ function loadHandler(event) {
 }
 
 function HTprocessData(one) {
+    console_log("HTprocessData")
     var allTextLines = one.split(/\r\n|\n/);
     lines = [];
     while (allTextLines.length) {
@@ -367,6 +370,7 @@ function initUniverse(){
 
 
 function parseL(lineStr) {
+    console_log("parseL")
     let lineS = lineStr;
     if (lineS == "") return false;
     let ID = Number(lineS[0]);
