@@ -16,12 +16,7 @@ ctx <- v8()
 
 ctx$assign("use_html", FALSE)
 
-cat("loading source\n")
 ctx$source("DUALuse.js")
-
-cat("after loading source\n")
-
-ctx$eval("auto()")
 
 
 
