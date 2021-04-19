@@ -2602,7 +2602,9 @@ function implementVax(ages,vax){
 
     function  TimesUp() {
         gen++;
-        if (gen % 10 == 0 && !use_html) {console_log("another 10 gens....")};
+        if (gen % 10 == 0 && !use_html) {
+          console_log("another 10 gens....")
+        };
         let i;
         if (gen > HALTgen && gen!=0) {
             HALT();
