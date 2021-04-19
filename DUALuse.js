@@ -56,15 +56,25 @@ function myLoad(xfname) {
 
  var txt = '';
  function iLoad(xFile){
-     var xmlhttp = new XMLHttpRequest();
-     xmlhttp.onreadystatechange = function(){
-         if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
-              txt = xmlhttp.responseText;
-              loadresult = JSON.parse(txt);
-         }
-     };
-     xmlhttp.open("GET","http://localhost:3001/"+xFile,false);
-     xmlhttp.send();
+     var has_dom = true;
+     try{
+       document
+     }
+     catch{
+       has_dom = false;
+     }
+
+     if(has_dom){
+       var xmlhttp = new XMLHttpRequest();
+       xmlhttp.onreadystatechange = function(){
+           if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+                txt = xmlhttp.responseText;
+                loadresult = JSON.parse(txt);
+           }
+       };
+       xmlhttp.open("GET","http://localhost:3001/"+xFile,false);
+       xmlhttp.send();
+     }
  }
 
  function errorHandler(evt) {
