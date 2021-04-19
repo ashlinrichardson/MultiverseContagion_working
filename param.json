@@ -1,1 +1,1 @@
-{"x":"Parameters,,,,,,,,,,\r\npopulation,5,,,,,,,,,\r\nUN,1,Universe\r\nHzR,4,,,,,,,,,\r\nsizeF,1.5,,,,,,,,,\r\nmF,2.6,,,,,,,,,\r\nRedDays,11.2,,,,,,,,,\r\npop file,pop5.json,,,,,,,,,\r\ncase file,case5.json,,,,,,,,,\r\nSTOP,350,,,,,,,,,\r\n"}
+{"x":"Parameters,,\npopulation,5,\nUN,1,Universe\nHzR,4,\nsizeF,1.5,0\nmF,2.6,0\nRedDays,11.2,\npop file,pop5.json,\ncase file,case5.json,\nSTOP,350,\n"}
