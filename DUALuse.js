@@ -75,6 +75,10 @@ function myLoad(xfname) {
        xmlhttp.open("GET","http://localhost:3001/"+xFile,false);
        xmlhttp.send();
      }
+     else{
+       txt = file_read(xFile)
+       loadresult = JSON.parse(txt);
+     }
  }
 
  function errorHandler(evt) {
