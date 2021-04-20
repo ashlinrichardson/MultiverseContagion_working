@@ -1112,7 +1112,6 @@ function startMain(){
     }
 
     function ConstructMVC() {
-        console_log("ConstructMVC()")
         M.ID;
         M.UCt = 1; // count of Universes
         M.PCt;
@@ -1150,12 +1149,10 @@ function startMain(){
         M.tInfectEnd;
         M.tOnset;
         M.tInert;
-        console.log("this.UCt=" + toString(this.UCt))
     }
 
 
     function initMV(){
-          console_log("initMV() !!!!!")
           M.ID = "";
           M.UCt = 1; // was 9
           M.GreenCt = M.PCt; // these are totalled from U's
@@ -1247,7 +1244,6 @@ function startMain(){
     }
 
     function initUniv(U, i) {
-        console_log("initUniv:" + U.toString() + "," + i.toString()) 
         U.uID = i;
         U.name = "U" + i;
         U.Population = 0;
