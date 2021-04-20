@@ -61,3 +61,5 @@ f.close()
 
 a = os.system('python3 csv_to_json.py')
 a = os.system('Rscript run.R > run.txt')
+a = os.system('grep prob= run.txt > run.log')
+a = os.system('python3 parse.py run.log')
