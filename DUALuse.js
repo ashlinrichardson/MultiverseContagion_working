@@ -1189,7 +1189,6 @@ function startMain(){
           M.tInfectEnd = VLinfEnd;
           M.tOnset = VLonsetT;
           M.tInert = VLinfEnd;
-          console_log("M.UCt=" + M.UCt.toString())
     }
 
     // ************************  this describes a local universe *********************************************************
