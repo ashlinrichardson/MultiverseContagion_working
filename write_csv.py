@@ -27,7 +27,7 @@ cols = ['pID','sno','ETA', '@U', 'ETD', '>U', '@Role', '@Mx', 'Age', 'FamKey', '
 w(f, ','.join(cols))
 
 for i in range(N):
-    d = [str(i), str(0), str(0), str(0), 24, str(0), 'R', str(1.), str(0), 'F00', '', 'U0', 'U0']
+    d = [str(i), str(0), str(0), str(0), str(24), str(0), 'R', str(1.), str(0), 'F00', '', 'U0', 'U0']
 
     while len(d) < len(cols):
         d = d + ['']
