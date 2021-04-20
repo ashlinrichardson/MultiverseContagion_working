@@ -3,7 +3,6 @@
 // ****************************************************************************
 console_log("paramSIMVL 2021.03.25 GUI-HTML parameter CovidSIMVL");
 console_log(Date());
-console_log("*** start ***")
 
 function dic_to_str(x) {
     var i = 0
@@ -19,7 +18,6 @@ function dic_to_str(x) {
 
 var M = {'UCt': 1}
 M.UCt = 1
-console.log("M.UCt = " + M.UCt.toString())
 
 function GetURLParameter(sParam){
     console_log("GetURLParameter")
@@ -28,8 +26,7 @@ function GetURLParameter(sParam){
     for (var i = 0; i < sURLVariables.length; i++)
     {
         var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam)
-        {
+        if(sParameterName[0] == sParam){
             return sParameterName[1];
         }
     }
@@ -43,7 +40,6 @@ var fullCt = 0;
 var VIEW = "local";
 var MODE = "manual"; // or "MV" - master controller of behavior
 var graphFlag = "NO";
-
 
 var cn = [];
 var offX = 75;
@@ -61,16 +57,11 @@ var c;
 
 
 function startParam(){
-      //alertX("Load param.json file starting");
-      console_log("startParam() myLoad(param.json)")
       myLoad("param.json");
-      console_log("JSONprocessData(COLLECTION)", COLLECTION)
       JSONprocessData(COLLECTION);
-      //alertX("Finished with parameter loading");
 }
 
 function myLoad(xfname) {
-    console_log("myLoad(", xfname, ")")
     iLoad(xfname);
     COLLECTION = loadresult.x;
   }
@@ -84,7 +75,6 @@ function myLoad(xfname) {
      catch{
        has_dom = false;
      }
-     console_log("has_dom", has_dom)
      if(has_dom==true){
        var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function(){
@@ -99,8 +89,6 @@ function myLoad(xfname) {
      else{
        txt = console.r.call('file_read', xFile)
        loadresult = JSON.parse(txt);
-       console_log("txt:", txt)
-       console_log("loadresult:", loadresult.x)
      }
  }
 
@@ -111,23 +99,17 @@ function myLoad(xfname) {
  }
 
  function JSONprocessData(one) {
-     console_log("JSONprocessData[" + one +  "]")
      var allTextLines = one.split(/\r\n|\n/);
      lines = [];
      while (allTextLines.length) {
          lines.push(allTextLines.shift().split(','));
      }
-     console_log("lines:[", lines, "]")
      JSONprocessL();
  }
 
  function JSONprocessL() {
-     console_log("JSONprocessL()")
-     console_log("lines:[" + lines)
-     console_log("]")
      let i, j;
      var inType = lines[0][0];
-     console_log("inType:" + inType.toString())
      switch (inType){
              case "Parameters":
                  JSONprocessParam();
@@ -149,18 +131,12 @@ var caseFileName;
 
 
 function JSONprocessParam(){
-    console_log("JSONprocessParam()")
-    console.log("M.UCt=" + M.UCt.toString())
-    console_log("lines[")
-    console_log(lines)
-    console_log("]")
     initMV();
     let i=0;
     lines.shift();
     let lineNo = lines.length;
     let parx;
     for (i=0;i<lineNo;i++){
-      console_log("lines[i]=[" + lines[i] + "]")
       parx = lines[i][0];
       let parN = lines[i][1];
       switch(parx){
@@ -170,7 +146,6 @@ function JSONprocessParam(){
               break;
           case "UN":
               M.UCt = Number(lines[i][1]);
-              console_log("M.UCt = " + M.UCt.toString())
               JSONinitUn();
               let p;
               for (p=0;p<M.UCt;p++){
@@ -182,8 +157,6 @@ function JSONprocessParam(){
               break;
           case "sizeF":
               let univ = lines[i][2];
-              console_log("lines[i]: " + lines[i].toString())
-              console_log("univ = " + lines[i][2].toString())
               chSizeF(parN,univ);
               break;
           case "mF":
@@ -215,21 +188,16 @@ function JSONprocessParam(){
 
 
 function startPopFile(){
-      console_log("Reading population file: " + popnFileName);
       myLoad(popnFileName);
       JSONprocessData(COLLECTION);
-      console_log("Population File loaded");
 }
 
 function startCaseFile(){
-      console_log("Reading Case File "+caseFileName);
       myLoad(caseFileName);
       JSONprocessData(COLLECTION);
-      console_log("Case File loaded");
 }
 
 function JSONprocessPop() {
-    console_log("JSONprocessPop")
     lines.shift();
     lines.shift();
     initTicket();
@@ -243,7 +211,6 @@ function JSONprocessPop() {
 }
 
 function JSONprocessCase() {
-    console_log("JSONprocessCase")
     let i=0;
     lines.shift();                  //gets rid of row labels
     lines.shift();
@@ -282,8 +249,6 @@ function parseC(lineStr) {
 
 var oneTime = 0;
 function JSONinitUn() {
-    console_log("**********JSONinitUn()*******")
-    console_log("**********M.UCt = " + M.UCt.toString()) 
     let i,j;
     oneTime = 0;
     for (i = 0; i < M.UCt; i++) {
@@ -304,7 +269,6 @@ function handleFiles(files) {
         // Check for the various File API support.
         if (window.FileReader) {
             // FileReader supported
-            console.log("getAsText", files[0])
             getAsText(files[0]);
         } else {
             alert('FileReader are not supported in this browser.');
@@ -326,7 +290,6 @@ function loadHandler(event) {
 }
 
 function HTprocessData(one) {
-    console_log("HTprocessData")
     var allTextLines = one.split(/\r\n|\n/);
     lines = [];
     while (allTextLines.length) {
@@ -385,8 +348,6 @@ function initSetPopUniv(){
         initUniverse();       // use defaults if entry is null
         initPopn(M.PCt);
     }
-    console_log("Population specified as: "+M.PCt);
-    console_log("Universes: "+M.UCt);
 }
 
 function initUniverse(){
@@ -412,7 +373,6 @@ function initUniverse(){
 
 
 function parseL(lineStr) {
-    console_log("parseL")
     let lineS = lineStr;
     if (lineS == "") return false;
     let ID = Number(lineS[0]);
@@ -450,7 +410,7 @@ function procClines(){
     GUIstyle("getFile","block");
     let x = prompt("If parameter file enter Y else enter N");
     if (x=="Y" || x=="y") {
-//      HTprocParam();
+      // HTprocParam();
     } else {
       GUIstyle("getFile","none");
       startMain();
@@ -4974,25 +4934,15 @@ if (use_html) {
       GUIstyle("getFile","block");
 }
 else{
-  console_log(" **startParam()")
   startParam();
-  console_log(" *startPopFile()")
   startPopFile();
-  console_log(" *startCaseFile()")
   startCaseFile();
-  console_log(" *startEpiCenters()")
   initEpiCenters();
   load();
   load();
   load();
   auto();
 }
-
-
-
-
-
-
 
 /********************   ASH stuff **********************************************
 // produce string representation for key-value store e.g. a histogram
