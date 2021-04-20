@@ -17,5 +17,7 @@ if len(args) < 2:
 
 fn = args[1]
 d = open(fn).read()
-dat = '{"x":"' + d + '")'
+d = d.replace('\r', '\\r')
+d = d.replace('\n', '\\n')
+dat = '{"x":"' + d.rstrip() + '"}'
 open(fn[:-4] + ".json", "wb").write(dat.encode())
