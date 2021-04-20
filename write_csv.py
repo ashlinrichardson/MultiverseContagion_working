@@ -1,3 +1,4 @@
+# write csv, convert to JSON, then run simulation
 import os
 import sys
 args = sys.argv
@@ -33,3 +34,30 @@ for i in range(N):
         d = d + ['']
 
     w(f, ((','.join(d)) + "\r\n"))
+
+
+f = open('param.csv', 'wb')
+w(f, 'Parameters,,\n')
+w(f, 'population,' + str(N) + ',\n')
+w(f, 'UN,1,Universe\n')
+w(f, 'HzR,4,\n')
+w(f, 'sizeF,1.5,0\n')
+w(f, 'mF,2.6,0\n')
+w(f, 'RedDays,11.2,\n')
+w(f, 'pop file,pop' + str(N) + '.json,\n')
+w(f, 'case file,case5.json,\n')
+w(f, 'STOP,350,\n')
+f.close()
+
+f = open('case5.csv', 'wb')
+w(f, '''Cases,,,,,,
+pID,age-Gp,comb-risk,VL,postInfD,role,minglx
+0,1,3,2.6,2.2,R,1
+1,1,3,2.6,2.2,R,1
+2,1,3,2.6,2.2,R,1
+3,1,3,2.6,2.2,R,1
+4,1,3,2.6,2.2,R,1''')
+f.close()
+
+a = os.system('python3 csv_to_json.py')
+a = os.system('Rscript run.R > run.txt')
