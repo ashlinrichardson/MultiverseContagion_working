@@ -14,4 +14,4 @@ for line in lines:
     y.append(float(yi))
 
 plt.plot(x, y)
-plt.show()
+plt.savefig('plot.png')
