@@ -5,7 +5,7 @@ library(Rcpp)
 library(V8)
 
 src<-function(x){
-  cat(paste(x, "\n", sep=""))
+  # cat(paste(x, "\n", sep=""))
   Rcpp::sourceCpp(x, cacheDir='tmp') ## source c/c++ fxn
 }
 
