@@ -13,5 +13,7 @@ for line in lines:
     x.append(float(xi))
     y.append(float(yi))
 
+plt.xlabel('gen')
+plt.ylabel('INF')
 plt.plot(x, y)
 plt.savefig('plot.png')
