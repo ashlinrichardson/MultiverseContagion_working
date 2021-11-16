@@ -1,3 +1,4 @@
+# simple parsing of console.log
 import os
 import sys
 import matplotlib.pyplot as plt
